@@ -1,0 +1,20 @@
+{
+  "name": "drivehub-minimalist-links",
+  "version": "1.0.0",
+  "description": "Minimalist Link Storage and Resource Management Website for Google Drive links using HTML, CSS, JavaScript, and Supabase",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "seed": "node scripts/seed-admin.js"
+  },
+  "keywords": [
+    "supabase",
+    "google-drive",
+    "resource-manager",
+    "minimalist-ui",
+    "links-manager"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
