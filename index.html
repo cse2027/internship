@@ -38,12 +38,13 @@
 
     <!-- Mobile Menu Drawer (Dropdown) -->
     <div id="mobileMenu" class="mobile-menu-drawer">
-      <div class="mobile-menu-title">Programs</div>
+      <div class="mobile-menu-title">Navigate</div>
       <div class="mobile-menu-links">
         <button class="mobile-menu-link active" onclick="selectProgramFromMobile('all')">All</button>
         <button class="mobile-menu-link" onclick="selectProgramFromMobile('APSSDC')">APSSDC</button>
         <button class="mobile-menu-link" onclick="selectProgramFromMobile('APSCHE / SMARTBRIDGE')">APSCHE / SMARTBRIDGE</button>
         <button class="mobile-menu-link" onclick="selectProgramFromMobile('HEXAING')">HEXAING</button>
+        <button class="mobile-menu-link" onclick="showInstructionsFromMobile()">Instructions</button>
       </div>
       <div class="mobile-menu-divider"></div>
       <button id="mobileAdminBtn" class="btn btn-primary btn-sm" style="width:100%;" onclick="openAdminFromMobile()">
@@ -60,22 +61,104 @@
   <main class="container">
 
     <!-- Filter Chips (Only All, APSSDC, APSCHE / SMARTBRIDGE, HEXAING) -->
-    <section class="controls-toolbar" aria-label="Program Filters" style="background:none; border:none; box-shadow:none; padding:0; margin-bottom:1.5rem;">
-      <div id="categoryChips" class="category-chips" role="tablist" aria-label="Program Filters" style="padding-top:0;">
-        <button class="category-chip active" data-program="all">All</button>
-        <button class="category-chip" data-program="APSSDC">APSSDC</button>
-        <button class="category-chip" data-program="APSCHE / SMARTBRIDGE">APSCHE / SMARTBRIDGE</button>
-        <button class="category-chip" data-program="HEXAING">HEXAING</button>
+    <section class="controls-toolbar" aria-label="Resource sections and program filters" style="background:none; border:none; box-shadow:none; padding:0; margin-bottom:1.5rem;">
+      <div id="categoryChips" class="category-chips" aria-label="Resource sections and program filters" style="padding-top:0;">
+        <button class="category-chip active" data-program="all" aria-pressed="true">All</button>
+        <button class="category-chip" data-program="APSSDC" aria-pressed="false">APSSDC</button>
+        <button class="category-chip" data-program="APSCHE / SMARTBRIDGE" aria-pressed="false">APSCHE / SMARTBRIDGE</button>
+        <button class="category-chip" data-program="HEXAING" aria-pressed="false">HEXAING</button>
+        <button class="category-chip" data-view="instructions" aria-pressed="false">Instructions</button>
       </div>
     </section>
 
-    <!-- Cards Grid -->
-    <section id="resourceGrid" class="resource-grid" aria-live="polite">
-      <!-- Injected via app.js -->
-    </section>
+    <div id="resourceView">
+      <!-- Cards Grid -->
+      <section id="resourceGrid" class="resource-grid" aria-live="polite">
+        <!-- Injected via app.js -->
+      </section>
 
-    <!-- Empty State -->
-    <div id="emptyState" class="empty-state" style="display: none; border:none; padding: 2rem 0; background: transparent;"></div>
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state" style="display: none; border:none; padding: 2rem 0; background: transparent;"></div>
+    </div>
+
+    <section id="instructionsPanel" class="instructions-panel" aria-labelledby="instructionsTitle" hidden>
+      <header class="instructions-header">
+        <p class="instructions-eyebrow">WORD DOCUMENT GUIDE</p>
+        <h1 id="instructionsTitle">Document formatting instructions</h1>
+        <p>Use this quick guide to keep your document consistent, readable, and ready to submit.</p>
+      </header>
+
+      <section class="guide-section" aria-labelledby="fontSetupTitle">
+        <h2 id="fontSetupTitle">1. Set the document font</h2>
+        <p>Select all text with <kbd>Ctrl</kbd> + <kbd>A</kbd>, then choose <strong>Times New Roman</strong>, <strong>12 pt</strong> from Home &gt; Font. Use bold only where the heading levels below require it.</p>
+        <p>To make this the default for future documents, open the Font dialog, set Times New Roman at 12 pt, choose <strong>Set As Default</strong>, then apply it to documents based on the Normal template.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="headingStylesTitle">
+        <h2 id="headingStylesTitle">2. Use a clear heading hierarchy</h2>
+        <div class="guide-grid">
+          <article class="guide-card">
+            <h3>Main heading <span>16 pt</span></h3>
+            <p>Times New Roman, bold, left-aligned.</p>
+            <p class="guide-example">1. INTRODUCTION</p>
+          </article>
+          <article class="guide-card">
+            <h3>Subheading <span>14 pt</span></h3>
+            <p>Times New Roman, bold, left-aligned.</p>
+            <p class="guide-example">1.1 Background of the Study</p>
+          </article>
+          <article class="guide-card">
+            <h3>Minor heading <span>12 pt</span></h3>
+            <p>Times New Roman, bold, left-aligned.</p>
+            <p class="guide-example">Objectives of the Study</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="bodyLayoutTitle">
+        <h2 id="bodyLayoutTitle">3. Set body text and page layout</h2>
+        <ul class="guide-list">
+          <li><strong>Body text:</strong> Times New Roman, 12 pt, regular weight. Select the body paragraphs and press <kbd>Ctrl</kbd> + <kbd>J</kbd> to justify them.</li>
+          <li><strong>Keep headings left-aligned:</strong> select each heading and press <kbd>Ctrl</kbd> + <kbd>L</kbd>.</li>
+          <li><strong>Paper:</strong> Layout &gt; Size &gt; A4 (21 × 29.7 cm).</li>
+          <li><strong>Margins:</strong> Layout &gt; Margins &gt; Normal for 1 inch (2.54 cm) on all four sides. Use Custom Margins to check each value if needed.</li>
+        </ul>
+      </section>
+
+      <section class="guide-section" aria-labelledby="figureRequirementsTitle">
+        <h2 id="figureRequirementsTitle">4. Add and present figures</h2>
+        <ul class="guide-list">
+          <li>Use clear, properly sized, relevant images, diagrams, flowcharts, or illustrations.</li>
+          <li>Introduce every figure in the text, explain its importance, and mention its number before placing it.</li>
+          <li>Number figures by module (for example, Figure 1.1, Figure 1.2, Figure 2.1).</li>
+          <li>Put a descriptive caption directly below each figure, with minimal space between text, image, and caption.</li>
+          <li>Keep each figure close to the explanation it supports.</li>
+        </ul>
+        <p class="figure-intro">Figure 1.1 illustrates the recommended order for presenting a figure. Introducing and numbering it first helps readers understand why the visual matters before they see it.</p>
+        <figure class="figure-example">
+          <svg class="figure-flow" viewBox="0 0 720 112" role="img" aria-labelledby="figureFlowTitle figureFlowDescription">
+            <title id="figureFlowTitle">Recommended figure placement sequence</title>
+            <desc id="figureFlowDescription">Explanatory text leads to a numbered figure, followed by a relevant visual and its caption.</desc>
+            <rect x="4" y="12" width="154" height="72" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+            <text x="81" y="43" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="600">Explain in text</text>
+            <text x="81" y="63" text-anchor="middle" fill="#475569" font-size="12">Introduce its purpose</text>
+            <path d="M170 48h32m-8-8 8 8-8 8" fill="none" stroke="#64748b" stroke-width="2"/>
+            <rect x="208" y="12" width="154" height="72" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+            <text x="285" y="43" text-anchor="middle" fill="#1d4ed8" font-size="14" font-weight="600">Name the figure</text>
+            <text x="285" y="63" text-anchor="middle" fill="#475569" font-size="12">Figure 1.1</text>
+            <path d="M374 48h32m-8-8 8 8-8 8" fill="none" stroke="#64748b" stroke-width="2"/>
+            <rect x="412" y="12" width="144" height="72" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+            <text x="484" y="43" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="600">Place visual</text>
+            <text x="484" y="63" text-anchor="middle" fill="#475569" font-size="12">Clear and relevant</text>
+            <path d="M568 48h32m-8-8 8 8-8 8" fill="none" stroke="#64748b" stroke-width="2"/>
+            <rect x="606" y="12" width="110" height="72" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+            <text x="661" y="43" text-anchor="middle" fill="#0f172a" font-size="14" font-weight="600">Caption</text>
+            <text x="661" y="63" text-anchor="middle" fill="#475569" font-size="12">Directly below</text>
+          </svg>
+          <figcaption>Figure 1.1. A simple sequence for introducing, placing, and captioning a figure.</figcaption>
+        </figure>
+      </section>
+    </section>
 
   </main>
 

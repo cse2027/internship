@@ -14,6 +14,7 @@ DriveHub is designed for maximum simplicity, performance, and ease of deployment
   - **Open**: Opens the file, folder, Doc, Sheet, or Slide in Google's native viewer.
   - **Download**: Direct file download endpoint (`uc?export=download&id=...`) or Docs/Sheets export endpoints.
 - **Search, Filter & Sort**: Search by title or description, filter by category chips, and sort newest/oldest/alphabetically.
+- **Instructions**: A built-in guide to Word document fonts, headings, page layout, and figure requirements.
 
 ---
 

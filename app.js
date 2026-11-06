@@ -228,13 +228,15 @@ const SupabaseService = {
 const state = {
   resources: [],
   activeProgram: 'all',
+  activeView: 'resources',
   isAdmin: sessionStorage.getItem('DRIVEHUB_ADMIN') === 'true'
 };
 
 const dom = {
+  resourceView: document.getElementById('resourceView'),
   grid: document.getElementById('resourceGrid'),
   emptyState: document.getElementById('emptyState'),
-  categoryChips: document.getElementById('categoryChips'),
+  instructionsPanel: document.getElementById('instructionsPanel'),
   toastContainer: document.getElementById('toastContainer'),
 
   adminModal: document.getElementById('adminModal'),
@@ -279,23 +281,49 @@ function updateAdminUI() {
 }
 
 function setupEventListeners() {
-  if (dom.categoryChips) {
-    const chips = dom.categoryChips.querySelectorAll('.category-chip');
-    chips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        const prog = chip.dataset.program;
-        state.activeProgram = prog;
-        chips.forEach(c => c.classList.toggle('active', c === chip));
-        loadResources();
-      });
-    });
-  }
+  document.querySelectorAll('[data-program]').forEach(button => {
+    button.addEventListener('click', () => setResourceView(button.dataset.program));
+  });
+
+  document.querySelectorAll('[data-view="instructions"]').forEach(button => {
+    button.addEventListener('click', showInstructions);
+  });
 
   if (dom.adminUrlInput) {
     dom.adminUrlInput.addEventListener('input', (e) => {
       updateAdminUrlPreview(e.target.value);
     });
   }
+}
+
+function updateSectionNavigation() {
+  document.querySelectorAll('[data-program]').forEach(button => {
+    const active = state.activeView === 'resources' && button.dataset.program === state.activeProgram;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+
+  document.querySelectorAll('[data-view="instructions"]').forEach(button => {
+    const active = state.activeView === 'instructions';
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+}
+
+function setResourceView(program) {
+  state.activeView = 'resources';
+  state.activeProgram = program;
+  dom.resourceView.hidden = false;
+  dom.instructionsPanel.hidden = true;
+  updateSectionNavigation();
+  return loadResources();
+}
+
+function showInstructions() {
+  state.activeView = 'instructions';
+  dom.resourceView.hidden = true;
+  dom.instructionsPanel.hidden = false;
+  updateSectionNavigation();
 }
 
 function updateAdminUrlPreview(url) {
@@ -612,21 +640,13 @@ function toggleMobileMenu() {
 }
 
 function selectProgramFromMobile(prog) {
-  state.activeProgram = prog;
-  const chips = dom.categoryChips ? dom.categoryChips.querySelectorAll('.category-chip') : [];
-  chips.forEach(c => c.classList.toggle('active', c.dataset.program === prog));
-
-  const mobileLinks = document.querySelectorAll('.mobile-menu-link');
-  mobileLinks.forEach(link => {
-    if (link.getAttribute('onclick')?.includes(`'${prog}'`)) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
-    }
-  });
-
+  setResourceView(prog);
   toggleMobileMenu();
-  loadResources();
+}
+
+function showInstructionsFromMobile() {
+  showInstructions();
+  toggleMobileMenu();
 }
 
 function openAdminFromMobile() {
@@ -645,4 +665,5 @@ window.triggerDownload = triggerDownload;
 window.copyLink = copyLink;
 window.toggleMobileMenu = toggleMobileMenu;
 window.selectProgramFromMobile = selectProgramFromMobile;
+window.showInstructionsFromMobile = showInstructionsFromMobile;
 window.openAdminFromMobile = openAdminFromMobile;
