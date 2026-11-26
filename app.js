@@ -10,7 +10,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 // Admin Credentials
 const ADMIN_USER = 'cse';
-const ADMIN_PASS = '2027';
+const ADMIN_PASS = 'u2027';
 
 // ==============================================================================
 // 1. GOOGLE DRIVE LINK UTILITY
